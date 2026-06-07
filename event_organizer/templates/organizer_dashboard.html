@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="dashboard-container">
+
+<div class="dashboard-hero">
+<div class="hero-copy">
+<p class="eyebrow">Organizer workspace</p>
+<h1 class="page-title">Build campus events that people actually remember.</h1>
+<p class="hero-text">
+Track registrations, monitor capacity, and keep every event moving from idea to full house.
+</p>
+<div class="hero-actions">
+<a href="{% url 'create_event' %}" class="view-btn hero-btn">Create New Event</a>
+<a href="/events/" class="secondary-btn">Browse Live Events</a>
+</div>
+</div>
+
+<div class="hero-panel">
+<p>Live overview</p>
+<strong>{{ total_registrations }}</strong>
+<span>Total registrations across {{ total_events }} event{{ total_events|pluralize }}</span>
+</div>
+</div>
+
+<div class="dashboard-stats">
+<div class="stat-card accent-card">
+<span class="stat-label">Total Events</span>
+<p>{{ total_events }}</p>
+<small>Published from your organizer account</small>
+</div>
+
+<div class="stat-card">
+<span class="stat-label">Total Registrations</span>
+<p>{{ total_registrations }}</p>
+<small>Students signed up for your experiences</small>
+</div>
+
+<div class="stat-card">
+<span class="stat-label">Current Reach</span>
+<p>
+{% if total_events %}
+{{ total_registrations|floatformat:0 }}
+{% else %}
+0
+{% endif %}
+</p>
+<small>Total audience currently engaged with your listed events</small>
+</div>
+</div>
+
+<div class="section-header">
+<div>
+<p class="eyebrow">Your lineup</p>
+<h2 class="section-title">Events you are managing</h2>
+</div>
+<span class="section-pill">{{ total_events }} active</span>
+</div>
+
+{% if events %}
+<div class="events-grid organizer-grid">
+{% for event in events %}
+<article class="event-card organizer-card">
+<div class="event-image">
+{% if event.image %}
+<img src="{{ event.image.url }}" alt="{{ event.title }}">
+{% else %}
+<img src="https://picsum.photos/640/360?random={{ event.id }}" alt="{{ event.title }}">
+{% endif %}
+
+{% if event.featured %}
+<span class="badge">Featured</span>
+{% endif %}
+<span class="capacity-chip">{{ event.percent }}% full</span>
+</div>
+
+<div class="event-content">
+<div class="event-topline">
+<span class="category">{{ event.get_category_display }}</span>
+<span class="spots {% if event.seats_left <= 5 %}spots-low{% endif %}">
+{{ event.seats_left }} spots left
+</span>
+</div>
+
+<h3>{{ event.title }}</h3>
+
+<div class="event-meta">
+<span>{{ event.venue }}</span>
+<span>{{ event.date }}</span>
+</div>
+
+<p class="event-description">
+{{ event.description|truncatechars:120 }}
+</p>
+
+<div class="registration-info">
+<span>{{ event.registration_set.count }} registered</span>
+<span>Capacity {{ event.max_participants }}</span>
+</div>
+
+<div class="progress-bar">
+<div class="progress" style="width: {{ event.percent }}%"></div>
+</div>
+
+<div class="card-actions">
+<a href="{% url 'event_detail' event.id %}" class="view-btn">View Details</a>
+<a href="{% url 'event_attendees' event.id %}" class="secondary-btn card-secondary-btn">Attendees</a>
+</div>
+
+<div class="card-actions compact-actions">
+<a href="{% url 'edit_event' event.id %}" class="text-action">Edit</a>
+<form method="POST" action="{% url 'delete_event' event.id %}" class="inline-form">
+{% csrf_token %}
+<button type="submit" class="text-action danger-action">Delete</button>
+</form>
+</div>
+</div>
+</article>
+{% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+<p class="eyebrow">Nothing published yet</p>
+<h3>Your dashboard is ready for the first event.</h3>
+<p>Create a launch page for a workshop, concert, sports meet, or cultural night and registrations will start appearing here.</p>
+<a href="{% url 'create_event' %}" class="view-btn">Create Your First Event</a>
+</div>
+{% endif %}
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block show_navbar %}
+{% include 'navbar.html' %}
+{% endblock %}
+{% block content %}
+
+<div class="auth-container">
+
+<h2>Create Account</h2>
+{% if error %}
+<p style="color:red">{{ error }}</p>
+{% endif %}
+<form method="POST">
+
+{% csrf_token %}
+
+<input type="text" name="username" placeholder="Username" required>
+<br><br>
+
+<input type="password" name="password" placeholder="Password" required>
+<br><br>
+
+<select name="role">
+
+<option value="student">Student</option>
+<option value="organizer">Organizer</option>
+
+</select>
+
+<br><br>
+
+<button type="submit">Create Account</button>
+
+</form>
+
+<p>Already have an account?</p>
+
+<a href="/login/">Login</a>
+
+</div>
+
+{% endblock %}

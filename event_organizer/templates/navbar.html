@@ -1,0 +1,43 @@
+<nav class="navbar">
+
+<a href="/events/" class="logo">
+<span class="logo-mark">EH</span>
+<span class="logo-copy">
+EventHub
+<small>Campus events</small>
+</span>
+</a>
+
+<div class="nav-center">
+<div class="nav-links">
+<a href="/events/" class="{% if request.path == '/events/' %}is-active{% endif %}">Events</a>
+
+{% if request.user.profile.role == 'student' %}
+<a href="/dashboard/student/" class="{% if request.path == '/dashboard/student/' %}is-active{% endif %}">Dashboard</a>
+<a href="{% url 'my_events' %}" class="{% if request.path == '/my-events/' %}is-active{% endif %}">Registered Events</a>
+{% endif %}
+ 
+{% if request.user.profile.role == 'organizer' %}
+<a href="/organizer-dashboard/" class="{% if request.path == '/organizer-dashboard/' %}is-active{% endif %}">Dashboard</a>
+<a href="{% url 'create_event' %}" class="{% if request.path == '/create-event/' %}is-active{% endif %}">Create Event</a>
+{% endif %}
+</div>
+</div>
+
+<div class="profile-menu">
+<div class="profile-chip">
+<img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="avatar" alt="Profile avatar">
+<div class="profile-copy">
+<strong>{{ request.user.username }}</strong>
+<span>{{ request.user.profile.role }}</span>
+</div>
+<span class="profile-caret">▾</span>
+</div>
+
+<div class="dropdown">
+<a href="/profile/">Profile</a>
+<a href="/logout/">Logout</a>
+</div>
+</div>
+
+</nav>

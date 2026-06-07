@@ -1,0 +1,16 @@
+venv/
+__pycache__/
+*.py[cod]
+*.log
+.env
+.env.*
+.python-version
+
+event_organizer/db.sqlite3
+event_organizer/media/
+event_organizer/staticfiles/
+
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

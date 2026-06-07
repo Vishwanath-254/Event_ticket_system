@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero">
+
+<h1>Discover Amazing Events</h1>
+
+<form method="GET">
+<input type="text" name="search" placeholder="Search events..." id="search">
+</form>
+
+</section>
+
+
+<div class="container">
+
+<div class="categories">
+
+<a href="/events/">All</a>
+<a href="?category=music">Music</a>
+<a href="?category=tech">Technology</a>
+<a href="?category=sports">Sports</a>
+<a href="?category=cultural">Cultural</a>
+<a href="?category=workshop">Workshop</a>
+
+</div>
+
+
+<h2 class="section-title">⭐ Featured Events</h2>
+
+<div class="featured-grid">
+
+{% for event in featured_events %}
+
+<div class="event-card">
+
+{% if event.image %}
+<img src="{{ event.image.url }}">
+{% else %}
+<img src="https://picsum.photos/400/200?random={{event.id}}">
+{% endif %}
+
+<a href="/event/{{event.id}}">
+
+<h3>{{ event.title }}</h3>
+
+</a>
+
+<p>{{ event.date }}</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+<h2 class="section-title">All Events</h2>
+
+<div class="events-grid">
+
+{% for event in events %}
+
+<div class="event-card">
+
+{% if event.image %}
+<img src="{{ event.image.url }}">
+{% else %}
+<img src="https://picsum.photos/400/200?random={{event.id}}">
+{% endif %}
+
+<div class="event-body">
+
+<h3>{{ event.title }}</h3>
+
+<p class="meta">📍 {{ event.venue }}</p>
+
+<p class="meta">📅 {{ event.date }}</p>
+
+<p class="meta">
+{{ event.seats_left }} seats left
+</p>
+
+<div class="progress">
+<div class="progress-bar" style="width: {{ event.percent }}%"></div>
+</div>
+
+<div class="card-actions">
+<a href="{% url 'event_detail' event.id %}" class="view-btn">View Event</a>
+<a href="{% url 'register_event' event.id %}">
+<button class="btn-primary">
+{% if event.seats_left > 0 %}Register{% else %}Join Waitlist{% endif %}
+</button>
+</a>
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

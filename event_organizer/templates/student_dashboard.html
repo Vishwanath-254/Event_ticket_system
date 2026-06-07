@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>My Registered Events</h2>
+
+<div class="events-grid">
+
+{% for r in registrations %}
+
+<div class="event-card">
+
+<h3>{{ r.event.title }}</h3>
+
+<p>{{ r.event.date }}</p>
+
+<p>{{ r.event.venue }}</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

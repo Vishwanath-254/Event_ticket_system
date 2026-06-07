@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="create-container">
+
+<h1>{{ form_title|default:"Create New Event" }}</h1>
+
+<form method="POST" enctype="multipart/form-data" class="event-form">
+
+{% csrf_token %}
+
+<div class="form-grid">
+
+<div class="form-group full">
+<label>Event Title</label>
+<input type="text" name="title" placeholder="Hackathon 2026" value="{{ event_data.title|default:'' }}" required>
+</div>
+
+<div class="form-group full">
+<label>Event Banner</label>
+<input type="file" name="image" id="imageUpload">
+{% if event_data and event_data.image %}
+<img id="preview" class="image-preview is-visible" src="{{ event_data.image.url }}" alt="{{ event_data.title }}">
+{% else %}
+<img id="preview" class="image-preview" alt="Selected event preview">
+{% endif %}
+</div>
+
+<div class="form-group">
+<label>Category</label>
+<select name="category">
+<option value="music" {% if event_data.category == "music" %}selected{% endif %}>Music</option>
+<option value="tech" {% if event_data.category == "tech" %}selected{% endif %}>Technology</option>
+<option value="sports" {% if event_data.category == "sports" %}selected{% endif %}>Sports</option>
+<option value="cultural" {% if event_data.category == "cultural" %}selected{% endif %}>Cultural</option>
+<option value="workshop" {% if event_data.category == "workshop" %}selected{% endif %}>Workshop</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Date</label>
+<input type="date" name="date" value="{{ event_data.date|date:'Y-m-d' }}">
+</div>
+
+<div class="form-group">
+<label>Venue</label>
+<input type="text" name="venue" placeholder="Auditorium Hall" value="{{ event_data.venue|default:'' }}">
+</div>
+
+<div class="form-group">
+<label>Maximum Participants</label>
+<input type="number" name="max_participants" placeholder="100" value="{{ event_data.max_participants|default:'' }}">
+</div>
+
+<div class="form-group full">
+<label>Description</label>
+<textarea name="description" rows="5" placeholder="Write event description...">{{ event_data.description|default:'' }}</textarea>
+</div>
+
+<div class="form-group toggle full">
+<label for="featuredToggle">Feature this event</label>
+<input type="checkbox" name="featured" id="featuredToggle" {% if event_data and event_data.featured %}checked{% endif %}>
+</div>
+
+</div>
+
+<button class="submit-btn">{{ submit_label|default:"Create Event" }}</button>
+
+</form>
+
+</div>
+
+<script>
+const upload = document.getElementById("imageUpload")
+const preview = document.getElementById("preview")
+
+if (upload) {
+upload.addEventListener("change", function(){
+const file = this.files[0]
+if(file){
+preview.src = URL.createObjectURL(file)
+preview.classList.add("is-visible")
+}
+})
+}
+</script>
+
+{% endblock %}
