@@ -98,7 +98,7 @@ pip install Django==6.0.2 Pillow==12.1.1
 ### 3. Move into the Django project directory
 
 ```bash
-cd event_manager
+cd event_organizer
 ```
 
 ### 4. Apply migrations
