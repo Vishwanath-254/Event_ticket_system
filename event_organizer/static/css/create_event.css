@@ -1,0 +1,90 @@
+.create-container{
+
+max-width:900px;
+margin:auto;
+padding:40px;
+
+}
+
+.event-form{
+
+background:white;
+padding:40px;
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+
+}
+
+.form-grid{
+
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+
+}
+
+.full{
+grid-column:span 2;
+}
+
+.form-group label{
+
+font-weight:600;
+margin-bottom:6px;
+display:block;
+
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+width:100%;
+padding:12px;
+border-radius:8px;
+border:1px solid #ddd;
+
+}
+
+.submit-btn{
+
+margin-top:20px;
+background:#3b82f6;
+color:white;
+padding:14px;
+border:none;
+border-radius:10px;
+font-weight:600;
+width:100%;
+cursor:pointer;
+transition:.3s;
+
+}
+
+.submit-btn:hover{
+
+background:#2563eb;
+
+}
+
+.image-preview{
+
+margin-top:10px;
+width:100%;
+border-radius:10px;
+display:none;
+
+}
+
+.image-preview.is-visible{
+display:block;
+}
+
+.toggle{
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+
+}

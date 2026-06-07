@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="event-detail-page">
+<div class="event-detail-hero">
+<div class="event-detail-media">
+{% if event.image %}
+<img src="{{ event.image.url }}" alt="{{ event.title }}">
+{% else %}
+<img src="https://picsum.photos/1200/700?random={{ event.id }}" alt="{{ event.title }}">
+{% endif %}
+
+{% if event.featured %}
+<span class="detail-badge">Featured Event</span>
+{% endif %}
+</div>
+
+<div class="event-detail-panel">
+<p class="eyebrow detail-eyebrow">{{ event.get_category_display }}</p>
+<h1>{{ event.title }}</h1>
+<p class="event-detail-description">{{ event.description }}</p>
+
+<div class="event-detail-meta">
+<div class="detail-meta-card">
+<span>Date</span>
+<strong>{{ event.date }}</strong>
+</div>
+<div class="detail-meta-card">
+<span>Venue</span>
+<strong>{{ event.venue }}</strong>
+</div>
+<div class="detail-meta-card">
+<span>Organizer</span>
+<strong>{{ event.created_by.username }}</strong>
+</div>
+<div class="detail-meta-card">
+<span>Capacity</span>
+<strong>{{ event.max_participants }} seats</strong>
+</div>
+</div>
+
+<div class="event-detail-stats">
+<div>
+<span>Registered</span>
+<strong>{{ registrations }}</strong>
+</div>
+<div>
+<span>Seats Left</span>
+<strong>{{ seats_left }}</strong>
+</div>
+<div>
+<span>Filled</span>
+<strong>{{ progress|floatformat:0 }}%</strong>
+</div>
+</div>
+
+<div class="detail-progress-shell">
+<div class="detail-progress-bar" style="width: {{ progress }}%"></div>
+</div>
+
+<div class="event-detail-actions">
+{% if request.user.is_authenticated and request.user.profile.role == "student" %}
+    {% if is_registered %}
+    <span class="registered-pill">Already Registered</span>
+    <form method="POST" action="{% url 'cancel_registration' event.id %}" class="inline-form">
+    {% csrf_token %}
+    <button type="submit" class="detail-cancel-btn">Cancel Registration</button>
+    </form>
+    {% elif is_waitlisted %}
+    <span class="registered-pill">On Waitlist</span>
+    {% else %}
+        {% if seats_left > 0 %}
+        <a href="{% url 'register_event' event.id %}" class="view-btn">Register Now</a>
+        {% else %}
+        <a href="{% url 'register_event' event.id %}" class="view-btn">Join Waitlist</a>
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+{% if request.user.is_authenticated and request.user.profile.role == "organizer" and request.user == event.created_by %}
+<a href="{% url 'edit_event' event.id %}" class="view-btn">Edit Event</a>
+<a href="{% url 'event_attendees' event.id %}" class="secondary-btn detail-secondary">View Attendees</a>
+{% endif %}
+
+<a href="/events/" class="secondary-btn detail-secondary">Back to Events</a>
+</div>
+</div>
+</div>
+
+<div class="event-detail-body">
+<div class="detail-section">
+<p class="eyebrow detail-content-eyebrow">About this event</p>
+<h2>What to expect</h2>
+<p>{{ event.description }}</p>
+</div>
+
+<div class="detail-grid">
+<div class="detail-card">
+<h3>Event snapshot</h3>
+<ul class="detail-list">
+<li><span>Category</span><strong>{{ event.get_category_display }}</strong></li>
+<li><span>Date</span><strong>{{ event.date }}</strong></li>
+<li><span>Venue</span><strong>{{ event.venue }}</strong></li>
+<li><span>Organizer</span><strong>{{ event.created_by.username }}</strong></li>
+</ul>
+</div>
+
+<div class="detail-card">
+<h3>Registration status</h3>
+<ul class="detail-list">
+<li><span>Total registrations</span><strong>{{ registrations }}</strong></li>
+<li><span>Seats remaining</span><strong>{{ seats_left }}</strong></li>
+<li><span>Maximum participants</span><strong>{{ event.max_participants }}</strong></li>
+<li><span>Featured</span><strong>{% if event.featured %}Yes{% else %}No{% endif %}</strong></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+{% endblock %}

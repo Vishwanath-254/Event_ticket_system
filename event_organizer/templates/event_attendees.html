@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="attendees-page">
+<div class="attendees-hero">
+<div>
+<p class="eyebrow attendees-eyebrow">Organizer tools</p>
+<h1>{{ event.title }}</h1>
+<p class="attendees-subtext">See who has secured a seat, who is waiting in line, and how your event capacity is shaping up.</p>
+</div>
+
+<div class="attendees-summary-grid">
+<div class="attendees-summary-card">
+<span>Registered</span>
+<strong>{{ registrations|length }}</strong>
+</div>
+<div class="attendees-summary-card">
+<span>Waitlist</span>
+<strong>{{ waitlist|length }}</strong>
+</div>
+<div class="attendees-summary-card">
+<span>Capacity</span>
+<strong>{{ event.max_participants }}</strong>
+</div>
+</div>
+</div>
+
+<div class="attendees-layout">
+<div class="attendees-panel">
+<div class="panel-header">
+<h2>Registered Students</h2>
+<span class="panel-pill">{{ registrations|length }}</span>
+</div>
+
+{% if registrations %}
+<div class="person-list">
+{% for registration in registrations %}
+<div class="person-row">
+<div>
+<strong>{{ registration.user.username }}</strong>
+<p>Confirmed on {{ registration.registered_at|date:"M d, Y" }}</p>
+</div>
+<span class="status-pill">Confirmed</span>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<p class="panel-empty">No students have registered yet.</p>
+{% endif %}
+</div>
+
+<div class="attendees-panel">
+<div class="panel-header">
+<h2>Waitlist Queue</h2>
+<span class="panel-pill subtle-pill">{{ waitlist|length }}</span>
+</div>
+
+{% if waitlist %}
+<div class="person-list">
+{% for entry in waitlist %}
+<div class="person-row">
+<div>
+<strong>{{ entry.user.username }}</strong>
+<p>Joined waitlist on {{ entry.joined_at|date:"M d, Y" }}</p>
+</div>
+<span class="queue-pill">#{{ forloop.counter }}</span>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<p class="panel-empty">Nobody is waiting for a seat right now.</p>
+{% endif %}
+</div>
+</div>
+</section>
+
+{% endblock %}

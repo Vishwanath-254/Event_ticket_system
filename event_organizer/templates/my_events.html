@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="my-events-page">
+<div class="my-events-hero">
+<div>
+<p class="eyebrow accent-eyebrow">Student space</p>
+<h1>My Registered Events</h1>
+<p class="hero-subtext">
+Keep track of every event you joined, review dates and venues quickly, and jump back into the details anytime.
+</p>
+</div>
+
+<div class="my-events-summary">
+<span class="summary-label">Current registrations</span>
+<strong>{{ registrations|length }}</strong>
+<small>Events saved under your profile</small>
+</div>
+</div>
+
+{% if registrations %}
+<div class="registered-events-grid">
+{% for r in registrations %}
+<article class="registered-event-card">
+<div class="registered-event-media">
+{% if r.event.image %}
+<img src="{{ r.event.image.url }}" alt="{{ r.event.title }}">
+{% else %}
+<img src="https://picsum.photos/640/360?random={{ r.event.id }}" alt="{{ r.event.title }}">
+{% endif %}
+<span class="registered-badge">{{ r.event.get_category_display }}</span>
+</div>
+
+<div class="registered-event-content">
+<div class="registered-event-topline">
+<h3>{{ r.event.title }}</h3>
+<span class="registered-date">{{ r.event.date }}</span>
+</div>
+
+<p class="registered-meta">{{ r.event.venue }}</p>
+<p class="registered-description">{{ r.event.description|truncatechars:130 }}</p>
+
+<div class="registered-footer">
+<span class="registered-status">Registered</span>
+<div class="registered-actions">
+<a href="{% url 'event_detail' r.event.id %}" class="view-btn">View Event</a>
+<form method="POST" action="{% url 'cancel_registration' r.event.id %}" class="inline-form">
+{% csrf_token %}
+<button type="submit" class="cancel-action">Cancel Registration</button>
+</form>
+</div>
+</div>
+</div>
+</article>
+{% endfor %}
+</div>
+{% else %}
+<div class="registered-empty-state">
+<p class="eyebrow accent-eyebrow">Nothing here yet</p>
+<h2>You have not registered for any events.</h2>
+<p>Browse the campus event feed, pick something interesting, and it will show up here automatically.</p>
+<a href="/events/" class="view-btn">Explore Events</a>
+</div>
+{% endif %}
+</section>
+
+{% endblock %}

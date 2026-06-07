@@ -1,0 +1,153 @@
+.attendees-page{
+display:grid;
+gap:28px;
+}
+
+.attendees-hero{
+display:grid;
+grid-template-columns:minmax(0, 1.1fr) minmax(280px, .9fr);
+gap:22px;
+padding:32px;
+border-radius:32px;
+background:linear-gradient(135deg, rgba(31,41,55,0.96), rgba(47,108,99,0.92));
+color:#f8f3ed;
+box-shadow:0 28px 60px rgba(31,41,55,0.18);
+}
+
+.attendees-eyebrow{
+color:rgba(248,243,237,0.7);
+}
+
+.attendees-hero h1{
+margin:0;
+font-family:"Space Grotesk",sans-serif;
+font-size:clamp(2rem, 5vw, 3.6rem);
+letter-spacing:-0.05em;
+}
+
+.attendees-subtext{
+max-width:56ch;
+margin:16px 0 0;
+color:rgba(248,243,237,0.82);
+line-height:1.7;
+}
+
+.attendees-summary-grid{
+display:grid;
+grid-template-columns:repeat(3, minmax(0, 1fr));
+gap:14px;
+}
+
+.attendees-summary-card,
+.attendees-panel{
+background:rgba(255,253,248,0.86);
+border:1px solid rgba(255,255,255,0.78);
+box-shadow:var(--shadow-soft);
+}
+
+.attendees-summary-card{
+padding:18px;
+border-radius:24px;
+color:var(--text);
+}
+
+.attendees-summary-card span{
+display:block;
+font-size:.82rem;
+text-transform:uppercase;
+letter-spacing:.12em;
+font-weight:800;
+color:var(--text-soft);
+}
+
+.attendees-summary-card strong{
+display:block;
+margin-top:10px;
+font-family:"Space Grotesk",sans-serif;
+font-size:2.2rem;
+}
+
+.attendees-layout{
+display:grid;
+grid-template-columns:repeat(2, minmax(0, 1fr));
+gap:24px;
+}
+
+.attendees-panel{
+padding:24px;
+border-radius:28px;
+}
+
+.panel-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+margin-bottom:18px;
+}
+
+.panel-header h2{
+margin:0;
+font-family:"Space Grotesk",sans-serif;
+letter-spacing:-0.03em;
+}
+
+.panel-pill,
+.queue-pill,
+.status-pill{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:8px 12px;
+border-radius:999px;
+font-weight:800;
+}
+
+.panel-pill,
+.status-pill{
+background:var(--accent-soft);
+color:var(--accent);
+}
+
+.subtle-pill,
+.queue-pill{
+background:rgba(201,111,59,0.12);
+color:var(--brand-deep);
+}
+
+.person-list{
+display:grid;
+gap:14px;
+}
+
+.person-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:16px;
+padding:16px 0;
+border-bottom:1px solid rgba(49,60,78,0.08);
+}
+
+.person-row:last-child{
+border-bottom:none;
+padding-bottom:0;
+}
+
+.person-row strong{
+display:block;
+}
+
+.person-row p,
+.panel-empty{
+margin:6px 0 0;
+color:var(--text-soft);
+}
+
+@media (max-width:980px){
+.attendees-hero,
+.attendees-layout,
+.attendees-summary-grid{
+grid-template-columns:1fr;
+}
+}

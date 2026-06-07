@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>EventHub</title>
+<link rel="stylesheet" href="{% static 'css/create_event.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+<link rel="stylesheet" href="{% static 'css/cards.css' %}">
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/my_events.css' %}">
+<link rel="stylesheet" href="{% static 'css/event_detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/event_attendees.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/organizer_dashboard.css' %}">
+</head>
+
+<body>
+
+{% if request.user.is_authenticated %}
+    {% block show_navbar %}
+        {% include 'navbar.html' %}
+    {% endblock %}
+{% endif %}
+
+<div class="page">
+
+{% if messages %}
+<div class="message-stack">
+{% for message in messages %}
+<div class="message message-{{ message.tags|default:'info' }}">{{ message }}</div>
+{% endfor %}
+</div>
+{% endif %}
+
+{% block content %}
+{% endblock %}
+
+</div>
+
+<script src="{% static 'js/ui.js' %}"></script>
+
+</body>
+</html>
