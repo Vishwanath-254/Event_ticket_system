@@ -1,4 +1,4 @@
-# College Event Manager
+# Event_ticket_system
 
 A Django-based web application for managing college events with separate workflows for students and organizers. Students can browse events, register for available seats, and join a waitlist when an event is full. Organizers can create and manage events, feature important listings, and track attendees from a dedicated dashboard.
 
@@ -18,21 +18,20 @@ A Django-based web application for managing college events with separate workflo
 
 ## Tech Stack
 
-- Python 3.13.5
-- Django 6.0.2 
-- Pillow 12.1.1
+- Python 
+- Django  
 - SQLite
 - HTML, CSS, and Django Templates
 
 ## Project Structure
 
 ```text
-college_event_manager/
+Event_ticket_system/
 |-- README.md
-|-- event_manager/
+|-- event_organizer/
 |   |-- manage.py
 |   |-- db.sqlite3
-|   |-- event_manager/     # Django project settings and root URLs
+|   |-- event_organizer/     # Django project settings and root URLs
 |   |-- events/            # Main application: models, views, routes
 |   |-- templates/         # Shared templates
 |   |-- static/            # CSS and frontend assets
@@ -136,8 +135,8 @@ Open `http://127.0.0.1:8000/` in your browser.
 
 ## Media and Static Files
 
-- Uploaded event and profile images are stored in `event_manager/media/`
-- Static assets are stored in `event_manager/static/`
+- Uploaded event and profile images are stored in `event_organizer/media/`
+- Static assets are stored in `event_organizer/static/`
 - In development, Django is configured to serve both static and media files
 
 ## Useful Commands

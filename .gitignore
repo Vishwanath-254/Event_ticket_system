@@ -6,9 +6,9 @@ __pycache__/
 .env.*
 .python-version
 
-event_manager/db.sqlite3
-event_manager/media/
-event_manager/staticfiles/
+event_organizer/db.sqlite3
+event_organizer/media/
+event_organizer/staticfiles/
 
 .vscode/
 .idea/
